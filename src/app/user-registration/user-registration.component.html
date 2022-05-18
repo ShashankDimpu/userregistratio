@@ -1,0 +1,123 @@
+<!--Registration Form-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accounts - Wardrobe</title>
+    <link rel="stylesheet" href="user-registration.component.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body>
+    <div class="account-page">
+        <div class="container">
+          
+        
+              
+
+    <!--Consuming Web API and displaying in the table (READ OPERATION -> GET)-->
+    <table class="table table-responsive" >
+        <thead>
+            <tr>
+                <th>UserId</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>UserName </th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let u of allUsers |async;">
+                <td> {{u.id}}</td>
+                <td> {{u.Name}}</td>
+                <td> {{u.Email}}</td>
+                <td> {{u.Gender}}</td>
+                <td> {{u.Username}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <!--Creating a user using Web API (Create Operation -> POST)-->
+    <div class="container">      
+        <div class="row">    
+            <div class="form_bg"> 
+                <!--accessing onSubmit() from user-registration.component.ts-->               
+                <form [formGroup]="userForm" (ngSubmit)="onSubmit()">    
+                     <h2 class="text-center">Concerns Page</h2>  
+                    <br/>  
+                    <div class="form-group"> 
+                        <label for="name">Name</label>   
+                        <input type="text" class="form-control"  
+                        formControlName="Name">     
+                    </div> 
+                    <div class="form-group" *ngFor="let gender of Gender">
+                        
+                    <label>
+                      <input formControlName="Gender"
+                        type="radio"
+                        [value]="gender" style="width: 20px; height: 20px;">{{ gender }}
+                    </label>
+                  </div>
+                    <div class="form-group"> 
+                        <label for="Email">Email</label>   
+                        <input type="text" class="form-control"  
+                        placeholder="sample@example.com" formControlName="Email">     
+                    </div>     
+                    <div class="form-group"> 
+                        <label for="username">UserName</label>
+                        <input type="text" class="form-control" id="username" 
+                        formControlName="Username">    
+                       </div>     
+                       <div class="form-group"> 
+                        <label for="password">Type your Concern here</label><br>
+                        <div class="form-group"> 
+                        <textarea type="text" rows="7" cols="100" class="form-control" id="password" 
+                        formControlName="password"></textarea>
+                        </div>    
+                       </div>                     
+                    <br/>     
+                    <div class="align-center">  
+                         <button type="submit" 
+                        class="btn btn-primary" id="register">Submit</button> 
+                        
+                    </div>  
+                </form>
+               
+            </div>
+        </div>
+ 
+        <br>
+        <br>
+        <!--Consuming Web API and displaying in the table (READ OPERATION -> GET)-->
+        <div class="container">
+            <table class="table table-responsive" >
+                <thead>
+                    <tr>
+                        <th>UserId</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Gender</th>
+                        <th>UserName </th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let u of allUsers |async;">
+                        <td> {{u.id}}</td>
+                        <td> {{u.Name}}</td>
+                        <td> {{u.Email}}</td>
+                        <td> {{u.Gender}}</td>
+                        <td> {{u.Username}}</td>
+                        <td>
+                            <button type="button" class="btn btn-info" Tooltip="Click Edit Button" (click)="loadUserToEdit(u.id)">Edit</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" Tooltip="Click Delete Button" (click)="deleteUser(u.id)">Delete</button>
+                        </td>     
+                    </tr>
+                </tbody>
+            </table>
